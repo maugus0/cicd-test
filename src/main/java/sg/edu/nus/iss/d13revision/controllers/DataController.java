@@ -7,20 +7,27 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 public class DataController {
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DataController.class);
     @GetMapping("/")
     public String healthCheck() {
+        log.info("Health check request recieved.");
         return "HEALTH CHECK OK!";
     }
 
     @GetMapping("/version")
     public String version() {
+        log.info("Version request received.");
         return "The actual version is 1.0.0";
     }
 
     @GetMapping("/nations")
     public JsonNode getRandomNations() {
+        log.info("Get all nations.");
         var objectMapper = new ObjectMapper();
         var faker = new Faker();
         var nations = objectMapper.createArrayNode();
@@ -37,6 +44,7 @@ public class DataController {
 
     @GetMapping("/currencies")
     public JsonNode getRandomCurrencies() {
+        log.info("Get all currencies.");
         var objectMapper = new ObjectMapper();
         var faker = new Faker();
         var currencies = objectMapper.createArrayNode();

@@ -1,7 +1,6 @@
 package sg.edu.nus.iss.d13revision.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.*;
 
@@ -13,10 +12,11 @@ import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@Controller
-@RequestMapping(path="/person")
 public class PersonController {
+    private static final Logger log = LoggerFactory.getLogger(PersonController.class);
     private List<Person> personList = new ArrayList<Person>();
 
     @Autowired
@@ -31,6 +31,7 @@ public class PersonController {
     // @RequestMapping(value = { "/", "/home", "/index" }, method = RequestMethod.GET)
     @GetMapping(value = { "/", "/home", "/index" })
     public String index(Model model) {
+        log.info("index called.");
         model.addAttribute("message", message);
 
         return "index";
@@ -39,6 +40,7 @@ public class PersonController {
     //@RequestMapping(value = "/testRetrieve", method = RequestMethod.GET, produces = "application/json")
     @GetMapping(value = "/testRetrieve", produces = "application/json")
     public @ResponseBody List<Person> getAllPersons() {
+        log.info("get all persons.");
         personList = perSvc.getPersons();
 
         return personList;
@@ -47,6 +49,7 @@ public class PersonController {
     //@RequestMapping(value = "/personList", method = RequestMethod.GET)
     @GetMapping(value = "/personList")
     public String personList(Model model) {
+        log.info("person list.");
         personList = perSvc.getPersons();
         model.addAttribute("persons", personList);
 
@@ -56,6 +59,7 @@ public class PersonController {
     //@RequestMapping(value = "/addPerson", method = RequestMethod.GET)
     @GetMapping(value = "/addPerson")
     public String showAddPersonPage(Model model) {
+        log.info("show add person page.");
         PersonForm pForm = new PersonForm();
         model.addAttribute("personForm", pForm);
 
